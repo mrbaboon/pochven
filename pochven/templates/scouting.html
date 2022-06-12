@@ -1,0 +1,99 @@
+{% extends "base5.html" %}
+
+{% block body %}
+
+    <nav class="navbar fixed-top bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Pochven Scouts</a>
+            <div class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                   data-bs-toggle="dropdown" aria-expanded="false">
+                    Logged in as {{ request.user.username }}
+                </a>
+                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownMenuLink">
+                    <form method="post" action="{% url "logout" %}">
+                        {% csrf_token %}
+                        <li>
+                            <button type="submit" name="action" value="logout" class="dropdown-item">Logout</button>
+                        </li>
+                    </form>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    {% if messages %}
+        <div class="container">
+            {% for message in messages %}
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    <i class="bi bi-check"></i> {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+            {% endfor %}
+        </div>
+
+    {% endif %}
+
+    <div class="container">
+        <div class="row py-4">
+            <div class="col">
+                <form method="post">
+                    {% csrf_token %}
+                    <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar with button groups">
+                        <div class="btn-group me-2" role="group" aria-label="First group">
+                            <button type="submit" name="action" value="reset" class="btn btn-danger">Reset</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+        </div>
+        <div class="row">
+            {% for constellation in constellations %}
+                <div class="col">
+                    <h3>{{ constellation.name }}</h3>
+
+                    <form method="post">
+                        {% csrf_token %}
+
+                        <table class="table table-condensed scout-table">
+                            <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Scouted By</th>
+                                <th></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for system in constellation.solarsystem_set.all %}
+                                <tr>
+                                    <td>
+                                        {{ system.name }}
+                                        {% if system.home %}
+                                            <i class="bi bi-house-door-fill"></i>
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ system.claimed_by.username }}</td>
+                                    <td class="actions">
+                                        {% if system.claimed_by == user %}
+                                            <button type="submit" name="remove-claim" value="{{ system.id }}"
+                                                    class="btn btn-warning btn-sm">
+                                                <i class="bi bi-trash3-fill"></i>
+                                            </button>
+                                        {% else %}
+                                            <button type="submit" name="claim-system" value="{{ system.id }}"
+                                                    class="btn btn-secondary btn-sm">
+                                                <i class="bi bi-binoculars-fill"></i>
+                                            </button>
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </form>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock body %}

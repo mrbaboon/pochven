@@ -1,0 +1,35 @@
+SYSTEMS = {
+    "Krai Perun": [
+        ("Kino", True),
+        ("Otanuomi", False),
+        ("Krirald", False),
+        ("Konola", False),
+        ("Nalvula", False),
+        ("Otela", False),
+        ("Ignebaener", False),
+        ("Komo", False),
+        ("Sakenta", False),
+    ],
+    "Krai Svarog": [
+        ("Niarja", True),
+        ("Ahtila", False),
+        ("Kuharah", False),
+        ("Tunudan", False),
+        ("Harva", False),
+        ("Raravoss", False),
+        ("Skarkon", False),
+        ("Nani", False),
+        ("Urhinichi", False),
+    ],
+    "Krai Veles": [
+        ("Archee", True),
+        ("Arvasaras", False),
+        ("Kaunokka", False),
+        ("Ichoriya", False),
+        ("Angymonne", False),
+        ("Vale", False),
+        ("Ala", False),
+        ("Wirashoda", False),
+        ("Senda", False),
+    ]
+}
