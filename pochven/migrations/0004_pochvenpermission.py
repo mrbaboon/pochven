@@ -7,23 +7,22 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
-        ('pochven', '0003_auto_20220610_2242'),
+        ("auth", "0012_alter_user_first_name_max_length"),
+        ("pochven", "0003_auto_20220610_2242"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='PochvenPermission',
-            fields=[
-            ],
+            name="PochvenPermission",
+            fields=[],
             options={
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('auth.permission',),
+            bases=("auth.permission",),
             managers=[
-                ('objects', django.contrib.auth.models.PermissionManager()),
+                ("objects", django.contrib.auth.models.PermissionManager()),
             ],
         ),
     ]

@@ -31,5 +31,5 @@ SYSTEMS = {
         ("Ala", False),
         ("Wirashoda", False),
         ("Senda", False),
-    ]
+    ],
 }

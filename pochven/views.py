@@ -1,23 +1,23 @@
 from django.contrib import messages
-from django.contrib.auth import login, logout, authenticate
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.forms import AuthenticationForm
 from django.contrib.auth.models import User
 from django.db.models import Prefetch
 from django.http import HttpResponseRedirect
-from django.shortcuts import render, redirect
+from django.shortcuts import redirect
 from django.urls import reverse_lazy
 from django.utils.decorators import method_decorator
 from django.views import View
-from django.views.generic import TemplateView, FormView
+from django.views.generic import FormView, TemplateView
 from django_registration import signals
 from django_registration.views import RegistrationView as _RegistrationView
 
-from pochven.models import SolarSystem, Constellation
+from pochven.models import Constellation, SolarSystem
 
 
 class RootView(TemplateView):
-    template_name = 'scouting.html'
+    template_name = "scouting.html"
 
     def get(self, request, **kwargs):
 
@@ -29,7 +29,7 @@ class RootView(TemplateView):
     def post(self, request, **kwargs):
 
         if not request.user.is_authenticated:
-            return redirect('/')
+            return redirect("/")
 
         action = request.POST.get("action")
 
@@ -40,9 +40,7 @@ class RootView(TemplateView):
             self.handle_scout_reset(request)
 
         if claim_system_id := request.POST.get("claim-system"):
-            SolarSystem.objects.filter(
-                id=claim_system_id
-            ).update(
+            SolarSystem.objects.filter(id=claim_system_id).update(
                 claimed_by=request.user
             )
 
@@ -50,46 +48,41 @@ class RootView(TemplateView):
             SolarSystem.objects.filter(
                 id=remove_claim_id,
                 claimed_by=request.user,
-            ).update(
-                claimed_by=None
-            )
+            ).update(claimed_by=None)
 
-        return redirect('/')
+        return redirect("/")
 
     def handle_clear_self(self, request):
 
-        SolarSystem.objects.filter(
-            claimed_by=request.user
-        ).update(
-            claimed_by=None
-        )
+        SolarSystem.objects.filter(claimed_by=request.user).update(claimed_by=None)
 
-    @method_decorator(permission_required(
-        perm='pochven.reset_scout',
-        raise_exception=True,
-    ))
+    @method_decorator(
+        permission_required(
+            perm="pochven.reset_scout",
+            raise_exception=True,
+        )
+    )
     def handle_scout_reset(self, request):
 
-        SolarSystem.objects.filter(
-            claimed_by__isnull=False
-        ).update(
-            claimed_by=None
-        )
+        SolarSystem.objects.filter(claimed_by__isnull=False).update(claimed_by=None)
         messages.success(request, "Successfully cleared scout assignments")
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data()
         constellations = Constellation.objects.all().prefetch_related(
-            Prefetch('solarsystem_set', queryset=SolarSystem.objects.order_by('constellation', 'order'))
+            Prefetch(
+                "solarsystem_set",
+                queryset=SolarSystem.objects.order_by("constellation", "order"),
+            )
         )
-        context['constellations'] = constellations
+        context["constellations"] = constellations
         return context
 
 
 class LoginView(FormView):
     template_name = "login.html"
     form_class = AuthenticationForm
-    success_url = reverse_lazy('root')
+    success_url = reverse_lazy("root")
 
     def form_valid(self, form):
         login(self.request, form.get_user())
@@ -97,7 +90,6 @@ class LoginView(FormView):
 
 
 class Logout(View):
-
     def post(self, request):
         if request.user.is_authenticated:
             logout(request)
@@ -105,8 +97,8 @@ class Logout(View):
 
 
 class RegistrationView(_RegistrationView):
-    template_name = 'register.html'
-    success_url = reverse_lazy('root')
+    template_name = "register.html"
+    success_url = reverse_lazy("root")
 
     def register(self, form):
         new_user = form.save()
@@ -124,7 +116,7 @@ class RegistrationView(_RegistrationView):
         return new_user
 
     def get_success_url(self, user=None):
-        return reverse_lazy('root')
+        return reverse_lazy("root")
 
     def form_valid(self, form):
         return HttpResponseRedirect(self.get_success_url(self.register(form)))

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from pochven.models import SolarSystem, Constellation
+from pochven.models import Constellation, SolarSystem
 
 
 class ConstellationAdmin(admin.ModelAdmin):

@@ -3,8 +3,8 @@ from django.db.models.signals import post_migrate
 
 
 class PochvenConfig(AppConfig):
-    default_auto_field = 'django.db.models.BigAutoField'
-    name = 'pochven'
+    default_auto_field = "django.db.models.BigAutoField"
+    name = "pochven"
 
     def ready(self):
         import pochven.management.post_migrate as pm_handlers

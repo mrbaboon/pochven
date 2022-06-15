@@ -5,11 +5,12 @@ from pochven.systems import SYSTEMS
 
 
 class Command(BaseCommand):
-
     def handle(self, *args, **options):
 
         for constellation_name in SYSTEMS.keys():
-            constellation, _ = Constellation.objects.get_or_create(name=constellation_name)
+            constellation, _ = Constellation.objects.get_or_create(
+                name=constellation_name
+            )
 
             systems = SYSTEMS[constellation_name]
 
@@ -21,7 +22,7 @@ class Command(BaseCommand):
                     defaults=dict(
                         order=idx,
                         home=is_home,
-                    )
+                    ),
                 )
 
                 if system.order != idx:
@@ -31,6 +32,3 @@ class Command(BaseCommand):
                     system.home = is_home
 
                 system.save()
-
-
-

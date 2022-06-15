@@ -6,18 +6,18 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('pochven', '0002_auto_20220610_2012'),
+        ("pochven", "0002_auto_20220610_2012"),
     ]
 
     operations = [
         migrations.AddField(
-            model_name='solarsystem',
-            name='home',
+            model_name="solarsystem",
+            name="home",
             field=models.BooleanField(default=False),
         ),
         migrations.AddField(
-            model_name='solarsystem',
-            name='order',
+            model_name="solarsystem",
+            name="order",
             field=models.PositiveSmallIntegerField(default=1),
             preserve_default=False,
         ),

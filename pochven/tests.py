@@ -5,7 +5,6 @@ from django.test import TestCase
 
 
 class RegistrationTestCase(TestCase):
-
     def test__registration_success(self):
 
         data = {
@@ -15,8 +14,7 @@ class RegistrationTestCase(TestCase):
             "password2": "SomeSecurePassword123",
         }
 
-        response = self.client.post('/accounts/register/', data=data)
-
+        response = self.client.post("/accounts/register/", data=data)
 
         try:
             user = User.objects.get(username="rsanchez")
@@ -27,4 +25,4 @@ class RegistrationTestCase(TestCase):
         self.assertTrue(user.check_password("SomeSecurePassword123"))
 
         self.assertEqual(response.status_code, 302)
-        self.assertEqual(response['Location'], '/')
+        self.assertEqual(response["Location"], "/")

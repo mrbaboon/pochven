@@ -7,26 +7,25 @@ from django.db import migrations
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('auth', '0012_alter_user_first_name_max_length'),
-        ('pochven', '0004_pochvenpermission'),
+        ("auth", "0012_alter_user_first_name_max_length"),
+        ("pochven", "0004_pochvenpermission"),
     ]
 
     operations = [
         migrations.DeleteModel(
-            name='PochvenPermission',
+            name="PochvenPermission",
         ),
         migrations.CreateModel(
-            name='Permission',
-            fields=[
-            ],
+            name="Permission",
+            fields=[],
             options={
-                'proxy': True,
-                'indexes': [],
-                'constraints': [],
+                "proxy": True,
+                "indexes": [],
+                "constraints": [],
             },
-            bases=('auth.permission',),
+            bases=("auth.permission",),
             managers=[
-                ('objects', django.contrib.auth.models.PermissionManager()),
+                ("objects", django.contrib.auth.models.PermissionManager()),
             ],
         ),
     ]
