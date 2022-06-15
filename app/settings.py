@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "debug_toolbar",
     "django_registration",
+    "django_bootstrap5",
     "pochven",
 ]
 
