@@ -1,0 +1,6 @@
+*
+!app
+!pochven
+!manage.py
+!pyproject.toml
+!poetry.lock

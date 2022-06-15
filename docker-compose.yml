@@ -1,0 +1,23 @@
+version: '3.4'
+
+services:
+  pochvenscouts:
+    image: pochvenscouts
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    ports:
+      - 3000:3000
+      - 8000:8000
+    volumes:
+      - .:/code/
+      
+  postgres:
+    image: postgres:13-alpine
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_USERNAME: postgres
+      POSTGRES_PASSWORD: postgres
+    

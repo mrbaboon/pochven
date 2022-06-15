@@ -13,6 +13,13 @@
                 <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownMenuLink">
                     <form method="post" action="{% url "logout" %}">
                         {% csrf_token %}
+                        {% if user.is_staff %}
+                        <li>
+                            <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">
+                                Admin <i class="bi bi-arrow-up-right-square"></i>
+                            </a>
+                        </li>
+                        {% endif %}
                         <li>
                             <button type="submit" name="action" value="logout" class="dropdown-item">Logout</button>
                         </li>
@@ -40,7 +47,10 @@
                     {% csrf_token %}
                     <div class="btn-toolbar float-end" role="toolbar" aria-label="Toolbar with button groups">
                         <div class="btn-group me-2" role="group" aria-label="First group">
+                            <button type="submit" name="action" value="clear-self" class="btn btn-warning">Clear</button>
+                            {% if perms.pochven.reset_scouts %}
                             <button type="submit" name="action" value="reset" class="btn btn-danger">Reset</button>
+                            {% endif %}
                         </div>
                     </div>
                 </form>

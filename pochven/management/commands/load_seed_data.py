@@ -18,6 +18,10 @@ class Command(BaseCommand):
                 system, _ = SolarSystem.objects.get_or_create(
                     constellation=constellation,
                     name=system_name,
+                    defaults=dict(
+                        order=idx,
+                        home=is_home,
+                    )
                 )
 
                 if system.order != idx:

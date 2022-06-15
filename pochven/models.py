@@ -1,6 +1,6 @@
 from django.db import models
 
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User, Permission as _Permission
 
 
 class Constellation(models.Model):
@@ -20,3 +20,9 @@ class SolarSystem(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class Permission(_Permission):
+
+    class Meta:
+        proxy = True
