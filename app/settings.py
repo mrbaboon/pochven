@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     "django_extensions",
     "debug_toolbar",
     "django_registration",
+    "django_bootstrap5",
     "pochven",
 ]
 
@@ -117,6 +118,14 @@ STATIC_URL = "static/"
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+EMAIL_URL = env.email_url("EMAIL_URL")
+EMAIL_BACKEND = EMAIL_URL['EMAIL_BACKEND']
+EMAIL_HOST = EMAIL_URL['EMAIL_HOST']
+EMAIL_PORT = EMAIL_URL['EMAIL_PORT']
+EMAIL_FILE_PATH = EMAIL_URL['EMAIL_FILE_PATH']
+EMAIL_HOST_USER = EMAIL_URL['EMAIL_HOST_USER']
+EMAIL_HOST_PASSWORD = EMAIL_URL['EMAIL_HOST_PASSWORD']
 
 
 INTERNAL_IPS = [

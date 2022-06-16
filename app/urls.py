@@ -15,19 +15,56 @@ Including another URLconf
 """
 from django.conf import settings
 from django.contrib import admin
+from django.contrib.auth.views import PasswordResetView, PasswordResetConfirmView, PasswordResetCompleteView
 from django.urls import include, path
+from django.contrib.auth import views as auth_views
+from django.views.generic import TemplateView
 
 from pochven import views
 
 urlpatterns = [
     path("", views.RootView.as_view(), name="root"),
+
+    path("login", views.LoginView.as_view(), name="login"),
+    path("logout", views.Logout.as_view(), name="logout"),
+
     path(
         "accounts/register/",
         views.RegistrationView.as_view(success_url="/profile/"),
         name="django_registration_register",
     ),
-    path("login", views.LoginView.as_view(), name="login"),
-    path("logout", views.Logout.as_view(), name="logout"),
+    path(
+        "accounts/change-password/",
+         auth_views.PasswordChangeView.as_view(template_name="accounts/password_change_form.html"),
+         name='change-password'),
+
+    path(
+        "accounts/change-password/done/",
+        TemplateView.as_view(template_name="accounts/password_change_done.html"),
+        name="password_change_done"),
+
+    path(
+        "accounts/password-reset/",
+        PasswordResetView.as_view(template_name="accounts/password_reset.html"),
+        name="password_reset"),
+
+    path(
+        "accounts/password-reset/done/",
+        PasswordResetView.as_view(template_name="accounts/password_reset_done.html"),
+        name="password_reset_done"),
+
+    path(
+        "accounts/password/reset/<uidb64>/<token>/",
+        PasswordResetConfirmView.as_view(template_name="accounts/password_reset_confirm.html"),
+        name="password_reset_confirm"),
+
+    path(
+        "accounts/password/reset/done/",
+        PasswordResetCompleteView.as_view(template_name="accounts/password_reset_complete.html"),
+        name="password_reset_complete"),
+
+
+
     path("admin/", admin.site.urls),
 ]
 

@@ -1,33 +1,7 @@
 {% extends "base5.html" %}
 
 {% block body %}
-
-    <nav class="navbar fixed-top bg-light">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Pochven Scouts</a>
-            <div class="nav-item dropdown">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
-                   data-bs-toggle="dropdown" aria-expanded="false">
-                    Logged in as {{ request.user.username }}
-                </a>
-                <ul class="dropdown-menu dropdown-menu-lg-end" aria-labelledby="navbarDropdownMenuLink">
-                    <form method="post" action="{% url "logout" %}">
-                        {% csrf_token %}
-                        {% if user.is_staff %}
-                        <li>
-                            <a class="dropdown-item" href="{% url 'admin:index' %}" target="_blank">
-                                Admin <i class="bi bi-arrow-up-right-square"></i>
-                            </a>
-                        </li>
-                        {% endif %}
-                        <li>
-                            <button type="submit" name="action" value="logout" class="dropdown-item">Logout</button>
-                        </li>
-                    </form>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    {% include "includes/nav.html" %}
     {% if messages %}
         <div class="container">
             {% for message in messages %}
