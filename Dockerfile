@@ -28,4 +28,4 @@ USER        appuser
 COPY        --chown=appuser:appuser . /code/
 
 
-CMD         ["bash"]
+CMD         ["gunicorn", "-b=0.0.0.0:8000", "app.wsgi"]
